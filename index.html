@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FFWD Bookkeeping | Professional Financial Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Global Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0B132B; /* Deep Navy Background */
+      color: #E0E1DD;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Color Palette Variables */
+    :root {
+      --bg-navy: #0B132B;
+      --card-navy: #1C2541;
+      --teal-accent: #00B4D8;
+      --cyan-bright: #90E0EF;
+      --text-white: #FFFFFF;
+      --text-muted: #A5A5A5;
+    }
+
+    /* Layout Container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header & Navigation */
+    header {
+      padding: 20px 0;
+      background-color: rgba(11, 19, 43, 0.95);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(144, 224, 239, 0.1);
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-white);
+      letter-spacing: 0.5px;
+    }
+    .logo span {
+      color: var(--teal-accent);
+    }
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+    .nav-links a:hover {
+      color: var(--cyan-bright);
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+    .btn-primary {
+      background-color: var(--teal-accent);
+      color: var(--bg-navy);
+      border: 1px solid var(--teal-accent);
+    }
+    .btn-primary:hover {
+      background-color: var(--cyan-bright);
+      border-color: var(--cyan-bright);
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      background-color: transparent;
+      color: var(--text-white);
+      border: 1px solid rgba(144, 224, 239, 0.4);
+    }
+    .btn-outline:hover {
+      border-color: var(--cyan-bright);
+      color: var(--cyan-bright);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 80px 0 50px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 20px;
+      line-height: 1.25;
+    }
+    .hero h1 span {
+      color: var(--teal-accent);
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 35px;
+      line-height: 1.6;
+    }
+    .hero-ctas {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 45px;
+      flex-wrap: wrap;
+    }
+
+    /* Trust Badge Strip under Hero */
+    .hero-badge-strip {
+      background-color: rgba(28, 37, 65, 0.6);
+      border: 1px solid rgba(144, 224, 239, 0.15);
+      border-radius: 30px;
+      padding: 12px 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 0 auto;
+    }
+    .badge-pill {
+      font-size: 0.88rem;
+      color: var(--cyan-bright);
+      font-weight: 500;
+    }
+    .badge-divider {
+      color: rgba(144, 224, 239, 0.3);
+    }
+
+    /* Stats Banner Section */
+    .stats-banner {
+      padding: 40px 0;
+      background: linear-gradient(180deg, rgba(28,37,65,0.4) 0%, rgba(11,19,43,0.8) 100%);
+      border-top: 1px solid rgba(144, 224, 239, 0.1);
+      border-bottom: 1px solid rgba(144, 224, 239, 0.1);
+      margin-bottom: 60px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--cyan-bright);
+      margin-bottom: 5px;
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Section Headers */
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      color: var(--text-white);
+      margin-bottom: 10px;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 45px;
+      font-size: 1rem;
+    }
+
+    /* Services Section */
+    .services {
+      padding: 40px 0 60px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+    .service-card {
+      background-color: var(--card-navy);
+      padding: 35px 30px;
+      border-radius: 10px;
+      border: 1px solid rgba(144, 224, 239, 0.08);
+      transition: all 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--teal-accent);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    .service-card h3 {
+      color: var(--cyan-bright);
+      margin-bottom: 15px;
+      font-size: 1.25rem;
+    }
+    .service-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* About Section */
+    .about-section {
+      padding: 60px 0;
+      background-color: var(--card-navy);
+      border-radius: 12px;
+      margin-bottom: 60px;
+      border: 1px solid rgba(144, 224, 239, 0.1);
+    }
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 30px;
+      text-align: center;
+    }
+    .about-content p {
+      font-size: 1.05rem;
+      color: #C0C5CE;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+
+    /* Reviews Section */
+    .reviews {
+      padding: 40px 0 60px;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+    .review-card {
+      background-color: var(--card-navy);
+      padding: 30px;
+      border-radius: 10px;
+      border: 1px solid rgba(144, 224, 239, 0.1);
+      position: relative;
+    }
+    .stars {
+      color: #FFD166;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+    .review-text {
+      color: var(--text-muted);
+      font-style: italic;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .reviewer-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 15px;
+    }
+    .reviewer-name {
+      font-weight: 600;
+      color: var(--text-white);
+      font-size: 0.9rem;
+    }
+    .reviewer-source {
+      font-size: 0.8rem;
+      color: var(--cyan-bright);
+      background: rgba(0, 180, 216, 0.1);
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+
+    /* Contact Section */
+    .contact {
+      padding: 60px 0;
+      background-color: var(--card-navy);
+      border-radius: 12px;
+      margin-bottom: 60px;
+      border: 1px solid rgba(144, 224, 239, 0.1);
+    }
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 14px;
+      background: var(--bg-navy);
+      border: 1px solid rgba(144, 224, 239, 0.2);
+      border-radius: 6px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--teal-accent);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Mobile Responsive Fixes */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+      .hero h1 {
+        font-size: 2.1rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .hero-ctas {
+        flex-direction: column;
+        align-items: center;
+      }
+      .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+      .hero-badge-strip {
+        flex-direction: column;
+        gap: 8px;
+        border-radius: 12px;
+        padding: 15px;
+      }
+      .badge-divider {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="container nav-container">
+      <div class="logo">FFWD <span>Bookkeeping</span></div>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#reviews">Reviews</a>
+        <a href="https://calendly.com/ffwdbookkeeping/bookkeeping-consultation" target="_blank" class="btn btn-primary">Book Free Call</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero container">
+    <h1>Smarter Financial Clarity for <span>Growing Businesses</span></h1>
+    <p>Expert QuickBooks Clean-Ups, Monthly Bookkeeping & Payroll. Specialized support for Law Firms, E-Commerce, Real Estate & Trades.</p>
+    
+    <div class="hero-ctas">
+      <a href="https://calendly.com/ffwdbookkeeping/bookkeeping-consultation
+" target="_blank" class="btn btn-primary">Schedule Free Consultation</a>
+
+      <a href="#reviews" class="btn btn-outline">Watch Client Reviews</a>
+    </div>
+
+
+    <!-- Exact Badge Layout from your design -->
+    <div class="trust-pill-container">
+  <span>QuickBooks Certified ProAdvisor</span>
+  <span class="divider">|</span>
+  <span>Xero Certified Advisor</span>
+  <span class="divider">|</span>
+  <span>Fiverr Level 2 Seller</span>
+  <span class="divider">|</span>
+  <!-- Trustpilot pill item -->
+  <a href="https://www.trustpilot.com/review/ffwdbookkeeping.com" target="_blank" style="color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="#00B67A">
+      <path d="M12 0l3.09 9.51h10l-8.09 5.88 3.09 9.51-8.09-5.88-8.09 5.88 3.09-9.51-8.09-5.88h10z"/>
+    </svg>
+    <strong>Trustpilot 3.8 ★</strong>
+  </a>
+</div>
+
+  </section>
+
+  <!-- Stats Banner -->
+  <section class="stats-banner">
+    <div class="container stats-grid">
+      <div>
+        <div class="stat-number">138+</div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div>
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Tax Readiness</div>
+      </div>
+      <div>
+        <div class="stat-number">Level 2</div>
+        <div class="stat-label">Fiverr Verified</div>
+      </div>
+      <div>
+        <div class="stat-item">
+  <div class="stat-number">24/7</div>
+  <div class="stat-label">CLIENT SUPPORT</div>
+</div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" style="padding: 60px 20px; background-color: #0f172a; text-align: center; color: #ffffff;">
+  <div style="max-width: 800px; margin: 0 auto; background: #1e293b; padding: 40px 30px; border-radius: 12px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+    
+    <!-- Heading -->
+    <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 8px; color: #ffffff;">
+      About FFWD Bookkeeping
+    </h2>
+    <p style="font-size: 1.1rem; color: #38bdf8; margin-bottom: 24px; font-weight: 500;">
+      Expert Financial Management Led by Fatima
+    </p>
+
+    <!-- Paragraphs -->
+    <p style="font-size: 1rem; line-height: 1.7; color: #cbd5e1; margin-bottom: 16px;">
+      Hi, I’m <strong style="color: #ffffff;">Fatima</strong>—a <strong style="color: #ffffff;">QuickBooks Certified ProAdvisor</strong> and Level 2 Seller on Fiverr. At FFWD Bookkeeping, I help business owners transform messy financial records into clean, audit-ready books.
+    </p>
+    
+    <p style="font-size: 1rem; line-height: 1.7; color: #cbd5e1; margin-bottom: 32px;">
+      With deep expertise in QuickBooks Online and Xero, my mission is to give you total peace of mind—whether that means fixing months of catch-up bookkeeping or managing your day-to-day accounts with 100% accuracy.
+    </p>
+
+    <!-- Transparent Badges Row -->
+    <div style="display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 20px;">
+      
+      <!-- QuickBooks ProAdvisor Badge -->
+      <img 
+        src="/proadvisor-badge.png" 
+        alt="QuickBooks Certified ProAdvisor" 
+        style="height: 65px; width: auto; object-fit: contain;" 
+      />
+      
+      <!-- Xero Logo -->
+      <img 
+        src="/xero-logo.png" 
+        alt="Xero Certified Advisor" 
+        style="height: 50px; width: auto; object-fit: contain;" 
+      />
+
+    </div>
+
+  </div>
+</section>
+
+  <!-- Services Section -->
+  <section id="services" class="container services">
+    <h2 class="section-title">Our Core Services</h2>
+    <p class="section-subtitle">Tailored bookkeeping solutions designed for your growth</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>QuickBooks & Xero Clean-Ups</h3>
+        <p>Behind on your books? We specialize in thorough catch-up and cleanup work to get your financial records 100% accurate and tax-ready.</p>
+      </div>
+      <div class="service-card">
+        <h3>Monthly Bookkeeping</h3>
+        <p>Consistent categorization of income & expenses, bank and credit card reconciliations, and easy-to-understand monthly P&L statements.</p>
+      </div>
+      <div class="service-card">
+        <h3>Payroll & Invoicing</h3>
+        <p>Ensure your team is paid accurately on time and your accounts receivable are managed effectively to maintain strong cash flow.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews Section -->
+  <section id="reviews" class="container reviews">
+    <h2 class="section-title">Client Reviews & Feedback</h2>
+    <p class="section-subtitle">Trusted by 138+ satisfied business owners worldwide</p>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Cleaned up 8 months of messy QuickBooks transactions in less than 3 days. Extremely professional and knowledgeable with Xero and QBO!"</p>
+        <div class="reviewer-info">
+          <span class="reviewer-name">E-Commerce Business Owner</span>
+          <span class="reviewer-source">Fiverr Review</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Saved us thousands during tax season by catching duplicate entries and misclassified expenses. Best bookkeeping service we have used!"</p>
+        <div class="reviewer-info">
+          <span class="reviewer-name">Real Estate Agency</span>
+          <span class="reviewer-source">Trustpilot Verified</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Super responsive, highly accurate, and always meets deadlines. Having clean monthly financials has completely changed how we run our firm."</p>
+        <div class="reviewer-info">
+          <span class="reviewer-name">Law Firm Partner</span>
+          <span class="reviewer-source">Fiverr Level 2</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="container contact">
+    <h2 class="section-title">Ready for Smarter Financial Clarity?</h2>
+    <p class="section-subtitle">Book a free consultation or leave us a message below</p>
+    <div style="padding: 0 20px;">
+      <form class="contact-form" action="https://formspree.io/f/mzdnaagd" method="POST">
+  <div class="form-group">
+    <input type="text" name="name" placeholder="Your Full Name" required>
+  </div>
+  <div class="form-group">
+    <input type="email" name="email" placeholder="Your Email Address" required>
+  </div>
+  <div class="form-group">
+    <textarea name="message" rows="4" placeholder="Tell us about your business, current accounting software (QuickBooks/Xero), or cleanup needs..." required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Send Message</button>
+</form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 FFWD Bookkeeping. All rights reserved. | QuickBooks Certified ProAdvisor & Xero Certified Advisor</p>
+    </div>
+  </footer>
+
+</body>
+</html>
