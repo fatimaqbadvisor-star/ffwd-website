@@ -748,14 +748,11 @@
       Have questions about QuickBooks, cleanup, or recurring bookkeeping? Request a Custom Quote.
     </p>
 
-    <form action="https://api.web3forms.com/submit" method="POST">
-  <input type="hidden" name="access_key" value="435250c2-9315-47e6-b0db-c411b9efa40b">
-  <input type="text" name="name" required>
-  <input type="email" name="email" required>
-  <textarea name="message" required></textarea>
-  <button type="submit">Submit</button>
-</form>
-      <input 
+ <form action="https://api.web3forms.com/submit" method="POST" style="display: flex; flex-direction: column; gap: 14px; text-align: left;">
+  <!-- Hidden configuration fields -->
+  <input type="hidden" name="access_key" value="AAPKI_ACCESS_KEY">
+  <input type="hidden" name="subject" value="New Bookkeeping Inquiry - FFWD Website">
+  <input type="hidden" name="from_name" value="FFWD Website Inquiry">      <input 
         type="text" 
         name="name" 
         placeholder="Your Full Name" 
